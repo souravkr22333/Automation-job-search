@@ -24,11 +24,11 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "https://your-frontend.vercel.app"],  # Restrict origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
+    )
 
 # ✅ Include ALL routers
 app.include_router(ai.router, prefix="/api/ai", tags=["AI"])
