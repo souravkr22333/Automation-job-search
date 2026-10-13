@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = 'https://automation-job-search-production.up.railway.app';
 
 // Helper to extract Django REST Framework error messages
 const extractError = (error, fallback = 'Something went wrong') => {
