@@ -17,10 +17,8 @@ const Login = () => {
     if (success) {
       navigate('/dashboard');
     }
-    else (error){
     console.log(error);
-    setIsLoading(false);
-    }
+    
   };
 
   return (
