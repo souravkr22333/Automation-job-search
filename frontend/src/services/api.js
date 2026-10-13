@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   // In Vite, use import.meta.env instead of process.env
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+  baseURL: 'https://automation-job-search-production.up.railway.app/api' || 'http://localhost:8000/api',
   
   headers: {
     'Content-Type': 'application/json',
