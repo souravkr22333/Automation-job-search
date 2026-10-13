@@ -31,6 +31,11 @@ SECRET_KEY = 'django-insecure-n1c8^bx%h)o+daq%=5h@_tyzc7g_i=q7(9@i$cv%%gy1k)ct^d
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    'CSRF_TRUSTED_ORIGINS',
+    'http://localhost:8000,http://127.0.0.1:8000,http://localhost:5173'
+).split(',')
+
 
 
 # Application definition
@@ -212,6 +217,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://automation-job-search-frontend-srg8.vercel.app',
 ]
+
 
 # Static & Media Files
 STATIC_URL = 'static/'
