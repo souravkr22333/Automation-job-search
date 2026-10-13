@@ -14,6 +14,7 @@ const Login = () => {
     console.log(email,password);
     setIsLoading(true);
     const success = await login(email, password);
+    console.log(success);
     if (success) {
       navigate('/dashboard');
     }
