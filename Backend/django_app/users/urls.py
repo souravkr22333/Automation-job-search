@@ -6,7 +6,8 @@ from .views import (
     UserPreferredJobsView, UserPreferredLocationsView,
     EducationViewSet, ExperienceViewSet, ProjectViewSet,
     CertificationViewSet, LanguageViewSet, CompleteProfileView,
-    LogoutView , VerifyEmailView, ResendVerificationView , PasswordResetConfirmView, PasswordResetRequestView
+    LogoutView, VerifyEmailView, ResendVerificationView,
+    PasswordResetConfirmView, PasswordResetRequestView, DashboardStatsView
 )
 
 router = DefaultRouter()
@@ -17,6 +18,8 @@ router.register(r'certifications', CertificationViewSet, basename='certification
 router.register(r'languages', LanguageViewSet, basename='language')
 
 urlpatterns = [
+    path('dashboard-stats/', DashboardStatsView.as_view(), name='user-dashboard-stats'),
+
     # Profile
     path('profile/', UserProfileView.as_view(), name='user-profile'),
     path('profile/complete/', CompleteProfileView.as_view(), name='complete-profile'),

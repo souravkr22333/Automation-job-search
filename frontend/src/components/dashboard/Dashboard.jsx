@@ -1,20 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
 import ActivityFeed from "./ActivityFeed";
-import {
-  BriefcaseIcon,
-  CalendarIcon,
-  CheckBadgeIcon,
-  ChartBarIcon,
-} from "@heroicons/react/24/outline";
+import api from "../../services/api";
 
 const Dashboard = () => {
-  const [stats] = useState({
-    applied: 142,
-    interviewing: 8,
-    offers: 2,
-    atsScore: 84,
+  const [stats, setStats] = useState({
+    jobs: { this_week: 0, this_month: 0 },
+    applications: { this_week: 0, this_month: 0 },
+    shortlisted: 0,
+    interviewing: 0,
   });
+  const [statsLoading, setStatsLoading] = useState(true);
+  const [statsError, setStatsError] = useState("");
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    const loadStats = async () => {
+      try {
+        const response = await api.get("/users/dashboard-stats/");
+        if (isCurrent) setStats(response.data);
+      } catch (error) {
+        if (isCurrent) {
+          setStatsError("Dashboard statistics could not be loaded.");
+          console.error("Failed to load dashboard statistics:", error);
+        }
+      } finally {
+        if (isCurrent) setStatsLoading(false);
+      }
+    };
+
+    loadStats();
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
 
   const [activities] = useState([
     {
@@ -46,64 +66,43 @@ const Dashboard = () => {
   return (
     <div className="space-y-6 bg-black text-white p-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-        <div className="text-sm text-gray-600">
-          <span className="font-semibold">281,204</span> applications processed
-          this month
-        </div>
+        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
       </div>
 
-     <div className="grid grid-cols-2  gap-4">
-           
+      {statsError && (
+        <p className="text-sm text-red-400" role="alert">{statsError}</p>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <StatsCard
-          
-          title="This Week"
-          value={stats.applied}
-          change="+12%"
+          title="Jobs Found This Week"
+          value={statsLoading ? "..." : stats.jobs.this_week}
+          applications="jobs"
+        />
+        <StatsCard
+          title="Jobs Found This Month"
+          value={statsLoading ? "..." : stats.jobs.this_month}
+          applications="jobs"
+        />
+        <StatsCard
+          title="Applied This Week"
+          value={statsLoading ? "..." : stats.applications.this_week}
           applications="applications"
-          
         />
         <StatsCard
-          
-          title="This Month"
-          value={stats.interviewing}
-          change="+3"
+          title="Applied This Month"
+          value={statsLoading ? "..." : stats.applications.this_month}
           applications="applications"
-          
-        />
-
-
-     </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatsCard
-         
-          title="Applied"
-          value={stats.applied}
-          change="+12%"
-          
         />
         <StatsCard
-           
+          title="Shortlisted"
+          value={statsLoading ? "..." : stats.shortlisted}
+          applications="saved jobs"
+        />
+        <StatsCard
           title="Interviewing"
-          value={stats.interviewing}
-          change="+3%"
-          
-        />
-        <StatsCard
-
-          title="Offers"
-          value={stats.offers}
-          change="+1%"
-          
-        />
-        <StatsCard
-          
-          title="ATS Score"
-          value={`${stats.atsScore}%`}
-          change="+5%"
-          
+          value={statsLoading ? "..." : stats.interviewing}
+          applications="applications"
         />
       </div>
 

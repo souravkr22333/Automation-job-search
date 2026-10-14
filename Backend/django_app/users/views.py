@@ -13,6 +13,7 @@ import jwt
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.utils import timezone as django_timezone
 from django.conf import settings
 import jwt
 from datetime import datetime, timedelta
@@ -24,6 +25,8 @@ from datetime import datetime, timedelta
 from .models import (
     User, Education, Experience, Project, Certification, Language
 )
+from applications.models import Application
+from jobs.models import JobListing
 from .serializers import (
     UserProfileSerializer, UserProfileUpdateSerializer,
     UserPreferencesSerializer, UserRegisterSerializer,
@@ -62,6 +65,47 @@ class LoginView(TokenObtainPairView):
     """JWT Login endpoint"""
     permission_classes = [permissions.AllowAny]
     serializer_class = CustomTokenObtainPairSerializer
+
+
+class DashboardStatsView(APIView):
+    """Return job and application counts for the authenticated user."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        now = django_timezone.now()
+        local_now = django_timezone.localtime(now)
+        week_start = local_now.replace(
+            hour=0, minute=0, second=0, microsecond=0
+        ) - timedelta(days=local_now.weekday())
+        month_start = local_now.replace(
+            day=1, hour=0, minute=0, second=0, microsecond=0
+        )
+
+        jobs = JobListing.objects.filter(user=request.user)
+        applications = Application.objects.filter(user=request.user)
+
+        return Response({
+            'jobs': {
+                'this_week': jobs.filter(
+                    discovered_at__gte=week_start, discovered_at__lte=now
+                ).count(),
+                'this_month': jobs.filter(
+                    discovered_at__gte=month_start, discovered_at__lte=now
+                ).count(),
+            },
+            'applications': {
+                'this_week': applications.filter(
+                    applied_at__gte=week_start, applied_at__lte=now
+                ).count(),
+                'this_month': applications.filter(
+                    applied_at__gte=month_start, applied_at__lte=now
+                ).count(),
+            },
+            'shortlisted': jobs.filter(is_saved=True).count(),
+            'interviewing': applications.filter(
+                status=Application.Status.INTERVIEWING
+            ).count(),
+        })
 
 
 # ============================================================
@@ -447,89 +491,6 @@ class CompleteProfileView(APIView):
             'status': 'success',
             'data': data
         })
-
-
-
-
-
-# # backend/django_app/users/views.py
-# from rest_framework import status, generics, permissions
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
-# from rest_framework_simplejwt.tokens import RefreshToken
-# from rest_framework_simplejwt.views import TokenObtainPairView
-# from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-# from django.core.cache import cache
-# from .models import User
-# from django.core.mail import send_mail
-# from django.template.loader import render_to_string
-# from django.utils.html import strip_tags
-# from django.conf import settings
-# import jwt
-# import uuid
-# from datetime import datetime, timedelta
-# from .models import User
-# from .serializers import (
-#     UserSerializer, 
-#     UserProfileSerializer, 
-#     UserPreferencesSerializer,
-#     CustomTokenObtainPairSerializer
-# )
-
-# class RegisterView(APIView):
-#     """User registration endpoint"""
-#     permission_classes = [permissions.AllowAny]
-    
-#     def post(self, request):
-#         serializer = UserSerializer(data=request.data)
-#         if serializer.is_valid():
-#             user = serializer.save()
-#             refresh = RefreshToken.for_user(user)
-            
-#             return Response({
-#                 'refresh': str(refresh),
-#                 'access': str(refresh.access_token),
-#                 'user': UserSerializer(user).data
-#             }, status=status.HTTP_201_CREATED)
-        
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# class LoginView(TokenObtainPairView):
-#     """JWT Login endpoint"""
-#     permission_classes = [permissions.AllowAny]
-#     serializer_class = CustomTokenObtainPairSerializer
-
-
-# class UserProfileView(generics.RetrieveUpdateAPIView):
-#     """User profile management"""
-#     serializer_class = UserProfileSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-    
-#     def get_object(self):
-#         return self.request.user
-
-
-# class UserPreferencesView(APIView):
-#     """User preferences management"""
-#     permission_classes = [permissions.IsAuthenticated]
-    
-#     def get(self, request):
-#         return Response(request.user.preferences)
-    
-#     def put(self, request):
-#         serializer = UserPreferencesSerializer(data=request.data)
-#         if serializer.is_valid():
-#             user = request.user
-#             user.preferences = serializer.validated_data
-#             user.save()
-            
-#             # Clear cache
-#             cache.delete(f'user_preferences_{user.id}')
-            
-#             return Response(user.preferences)
-        
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
