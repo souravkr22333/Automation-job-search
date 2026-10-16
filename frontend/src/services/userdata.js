@@ -11,7 +11,7 @@ import axios from 'axios';
 export const profileService = {
   // Get complete profile
   getCompleteProfile: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/profile/complete/',{
+    const response = await axios.get(`${API_URL}/users/profile/complete/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export const profileService = {
 
   // Update profile
   updateProfile: async (data) => {
-    const response = await axios.put('http://localhost:8000/api/users/profile/', data,{
+    const response = await axios.put(`${API_URL}/users/profile/`, data,{
        headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const profileService = {
 
   // Update preferences
   updatePreferences: async (data) => {
-    const response = await axios.put('http://localhost:8000/api/users/preferences/', data,{
+    const response = await axios.put(`${API_URL}/users/preferences/`, data,{
        headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const profileService = {
 
   // Skills
   getSkills: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/skills/',{
+    const response = await axios.get(`${API_URL}/users/skills/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const profileService = {
   },
 
   addSkills: async (skills) => {
-    const response = await axios.post('http://localhost:8000/api/users/skills/', { skills },{
+    const response = await axios.post(`${API_URL}/users/skills/`, { skills },{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export const profileService = {
   },
 
   removeSkills: async (skills) => {
-    const response = await axios.delete('http://localhost:8000/api/users/skills/', { data: { skills } },{
+    const response = await axios.delete(`${API_URL}/users/skills/`, { data: { skills } },{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export const profileService = {
 
   // Preferred Jobs
   getPreferredJobs: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/preferred-jobs/',{
+    const response = await axios.get(`${API_URL}/users/preferred-jobs/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const profileService = {
   },
 
   addPreferredJobs: async (jobs) => {
-    const response = await axios.post('http://localhost:8000/api/users/preferred-jobs/', { jobs },{
+    const response = await axios.post(`${API_URL}/users/preferred-jobs/`, { jobs },{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const profileService = {
 
   // Preferred Locations
   getPreferredLocations: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/preferred-locations/',{
+    const response = await axios.get(`${API_URL}/users/preferred-locations/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export const profileService = {
   },
 
   addPreferredLocations: async (locations) => {
-    const response = await axios.post('http://localhost:8000/api/users/preferred-locations/', { locations },{
+    const response = await axios.post(`${API_URL}/users/preferred-locations/`, { locations },{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export const profileService = {
   // ============================================================
   
   getEducations: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/educations/',{
+    const response = await axios.get(`${API_URL}/users/educations/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ export const profileService = {
   },
 
   createEducation: async (data) => {
-    const response = await axios.post('http://localhost:8000/api/users/educations/', data,{
+    const response = await axios.post(`${API_URL}/users/educations/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ export const profileService = {
   },
 
   updateEducation: async (id, data) => {
-    const response = await axios.put(`http://localhost:8000/api/users/educations/${id}/`, data,{
+    const response = await axios.put(`${API_URL}/users/educations/${id}/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ export const profileService = {
   },
 
   deleteEducation: async (id) => {
-    const response = await axios.delete(`http://localhost:8000/api/users/educations/${id}/`,{
+    const response = await axios.delete(`${API_URL}/users/educations/${id}/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ export const profileService = {
   // ============================================================
   
   getExperiences: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/experiences/',{
+    const response = await axios.get(`${API_URL}/users/experiences/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -189,7 +189,7 @@ export const profileService = {
   },
 
   createExperience: async (data) => {
-    const response = await axios.post('http://localhost:8000/api/users/experiences/', data,{
+    const response = await axios.post(`${API_URL}/users/experiences/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ export const profileService = {
   },
 
   updateExperience: async (id, data) => {
-    const response = await axios.put(`http://localhost:8000/api/users/experiences/${id}/`, data,{
+    const response = await axios.put(`${API_URL}/users/experiences/${id}/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ export const profileService = {
   },
 
   deleteExperience: async (id) => {
-    const response = await axios.delete(`http://localhost:8000/api/users/experiences/${id}/`,{
+    const response = await axios.delete(`${API_URL}/users/experiences/${id}/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -226,7 +226,7 @@ export const profileService = {
   // ============================================================
   
   getProjects: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/projects/',{
+    const response = await axios.get(`${API_URL}/users/projects/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ export const profileService = {
   },
 
   createProject: async (data) => {
-    const response = await axios.post('http://localhost:8000/api/users/projects/', data,{
+    const response = await axios.post(`${API_URL}/users/projects/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ export const profileService = {
   },
 
   updateProject: async (id, data) => {
-    const response = await axios.put(`http://localhost:8000/api/users/projects/${id}/`, data,{
+    const response = await axios.put(`${API_URL}/users/projects/${id}/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -259,7 +259,7 @@ export const profileService = {
   },
 
   deleteProject: async (id) => {
-    const response = await axios.delete(`http://localhost:8000/api/users/projects/${id}/`,{
+    const response = await axios.delete(`${API_URL}/users/projects/${id}/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -274,7 +274,7 @@ export const profileService = {
   // ============================================================
   
   getCertifications: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/certifications/',{
+    const response = await axios.get(`${API_URL}/users/certifications/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -285,7 +285,7 @@ export const profileService = {
   },
 
   createCertification: async (data) => {
-    const response = await axios.post('http://localhost:8000/api/users/certifications/', data,{
+    const response = await axios.post(`${API_URL}/users/certifications/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -296,7 +296,7 @@ export const profileService = {
   },
 
   updateCertification: async (id, data) => {
-    const response = await axios.put(`http://localhost:8000/api/users/certifications/${id}/`, data,{
+    const response = await axios.put(`${API_URL}/users/certifications/${id}/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -307,7 +307,7 @@ export const profileService = {
   },
 
   deleteCertification: async (id) => {
-    const response = await axios.delete(`http://localhost:8000/api/users/certifications/${id}/`,{
+    const response = await axios.delete(`${API_URL}/users/certifications/${id}/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -322,7 +322,7 @@ export const profileService = {
   // ============================================================
   
   getLanguages: async () => {
-    const response = await axios.get('http://localhost:8000/api/users/languages/',{
+    const response = await axios.get(`${API_URL}/users/languages/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -333,7 +333,7 @@ export const profileService = {
   },
 
   createLanguage: async (data) => {
-    const response = await axios.post('http://localhost:8000/api/users/languages/', data,{
+    const response = await axios.post(`${API_URL}/users/languages/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -344,7 +344,7 @@ export const profileService = {
   },
 
   updateLanguage: async (id, data) => {
-    const response = await axios.put(`http://localhost:8000/api/users/languages/${id}/`, data,{
+    const response = await axios.put(`${API_URL}/users/languages/${id}/`, data,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
@@ -355,7 +355,7 @@ export const profileService = {
   },
 
   deleteLanguage: async (id) => {
-    const response = await axios.delete(`http://localhost:8000/api/users/languages/${id}/`,{
+    const response = await axios.delete(`${API_URL}/users/languages/${id}/`,{
         headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'Content-Type': 'application/json',
