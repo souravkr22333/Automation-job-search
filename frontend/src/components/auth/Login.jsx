@@ -11,12 +11,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(email,password);
     setIsLoading(true);
     const success = await login(email, password);
+    console.log(success);
     if (success) {
       navigate('/dashboard');
     }
-    setIsLoading(false);
+    console.log(error);
+    
   };
 
   return (

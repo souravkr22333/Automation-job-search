@@ -1,8 +1,6 @@
 import axios from "axios";
 
-//const API_URL = 'http://localhost:8000/api';
-const API_URL = 'https://automation-job-search-production.up.railway.app/api';
-
+const API_URL = 'http://localhost:8000/api';
 
 // Centralized job API wrapper for the dedicated job detail page
 const apiService = {

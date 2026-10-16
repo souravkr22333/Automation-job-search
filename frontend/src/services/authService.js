@@ -1,26 +1,5 @@
 import axios from 'axios';
 
-const API_URL = 'https://automation-job-search-production.up.railway.app';
-// const API_URL = 'http://localhost:8000';
-
-// Helper to extract Django REST Framework error messages
-const extractError = (error, fallback = 'Something went wrong') => {
-  const data = error.response?.data;
-  if (!data) return error.message || fallback;
-  if (typeof data === 'string') return data;
-  if (data.detail) return data.detail;
-  if (data.message) return data.message;
-  if (data.non_field_errors?.[0]) return data.non_field_errors[0];
-  const firstValue = Object.values(data).flat()[0];
-  return typeof firstValue === 'string' ? firstValue : fallback;
-};
-
-// Helper to get auth header
-const getAuthHeader = () => {
-  const token = localStorage.getItem('access_token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
-
 class AuthService {
   // ==========================
   // LOGIN
@@ -132,4 +111,3 @@ class AuthService {
 }
 
 export default new AuthService();
-
