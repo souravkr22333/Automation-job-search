@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 FASTAPI_BASE_URL = "https://automation-job-search-production-8547.up.railway.app"
 
+
 SOURCE_MAP = {
     'apify_linkedin': 'official',
     'apify_indeed': 'fast',
