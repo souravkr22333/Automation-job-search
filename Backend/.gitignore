@@ -1,0 +1,15 @@
+﻿
+.env
+.env.*
+**/.env
+**/.env.*
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+*.log
+.vite
+
+
+*.local
+**/*.local
+**/./config.py

@@ -1,11 +1,10 @@
-# backend/django_app/jobs/tasks.py (add this task)
+# backend/django_app/jobs/tasks.py
 import logging
 from celery import shared_task
 from django.db import transaction
 from django.utils.timezone import now
 
 logger = logging.getLogger(__name__)
-
 
 @shared_task(bind=True, max_retries=3)
 def store_apify_jobs(self, user_id: str, jobs: list):
@@ -73,8 +72,3 @@ def store_apify_jobs(self, user_id: str, jobs: list):
     except Exception as e:
         logger.error(f"Failed to store Apify jobs: {str(e)}")
         self.retry(exc=e, countdown=60 * (2 ** self.request.retries))
-
-
-
-
-
